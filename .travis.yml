@@ -6,6 +6,9 @@ addons:
 language: groovy
 jdk: oraclejdk7
 env: TERM=dumb
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
 before_install:
   - git config user.email "tobias.schulte@gliderpilot.de"
   - git config user.name "Travis-CI"
