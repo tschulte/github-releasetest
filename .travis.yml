@@ -6,6 +6,9 @@ addons:
 language: groovy
 jdk: oraclejdk7
 env: TERM=dumb
+cache:
+  directories:
+  - $HOME/.gradle
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
