@@ -11,8 +11,6 @@ branches:
     - /^v\d+\.\d+\.\d+$/
 before_install:
   - git fetch --unshallow
-  - git config user.email "tobias.schulte@gliderpilot.de"
-  - git config user.name "Travis-CI"
   - git config url.https://.insteadOf git://
   - git checkout -qf $TRAVIS_BRANCH
 # skip default gradlew assemble
