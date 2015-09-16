@@ -22,4 +22,4 @@ before_install:
 install:
   - echo "skip default gradlew assemble"
 script:
-  - ./gradlew release -PghToken=${GH_TOKEN} -Dorg.ajoberstar.grgit.auth.username=${GH_TOKEN} -Dorg.ajoberstar.grgit.auth.password --info --stacktrace
+  - ./gradlew release -PghToken=${GH_TOKEN} -Dorg.ajoberstar.grgit.auth.username=${GH_TOKEN} -Dorg.ajoberstar.grgit.auth.password --debug --stacktrace
