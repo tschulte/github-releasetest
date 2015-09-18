@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+user=tschulte
+repo=github-releasetest
+
+version="$1"
+tag="v$version"
+
+git tag $tag -m "Release of $version"
+git push origin "$tag"
+
+curl -i -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GH_TOKEN" \
+    "https://api.github.com/repos/$user/$repo/releases" \
+    -d "{\"tag_name\": \"$tag\", \"body\": \"# Changelog of $version\"}"
