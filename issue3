@@ -11,6 +11,19 @@ tag="v$version"
 git tag $tag -m "Release of $version"
 git push origin "$tag"
 
-curl -i -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GH_TOKEN" \
+echo "checking existence of tag $tag using API"
+while [ "$(curl -s -w "%{http_code}" -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/$user/$repo/git/refs/tags/$tag" -o /dev/null)" -ne "200" ]
+do
+    echo "API does not know tag -- retrying"
+done
+echo "API knows tag"
+
+if [ "$(curl -s -w "%{http_code}" -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GH_TOKEN" \
     "https://api.github.com/repos/$user/$repo/releases" \
-    -d "{\"tag_name\": \"$tag\", \"body\": \"# Changelog of $version\"}"
+    -d "{\"tag_name\": \"$tag\", \"body\": \"# Changelog of $version\"}" -o /dev/null)" == "201" ]
+then
+    echo "Release uploaded successfully"
+else
+    echo "Release could not be uploaded"
+    exit 1
+fi
